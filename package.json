@@ -37,25 +37,20 @@
     "xcode": "^1.0.0",
     "path": "^0.12.7"
   },
-  "peerDependencies": {
-    "react-native": ">=0.40"
+  "devDependencies": {
+    "@babel/core": "7.5.5",
+    "@semantic-release/git": "7.0.16",
+    "babel-jest": "^24.9.0",
+    "jest": "24.9.0",
+    "react": "16.8.3",
+    "react-native": "0.60.5",
+    "semantic-release": "15.13.24"
   },
-  "rnpm": {
-    "ios": {
-      "sharedLibraries": [
-        "libz",
-        "libiconv",
-        "libsqlite3",
-        "libstdc++",
-        "Security",
-        "SystemConfiguration",
-        "CoreTelephony",
-        "CoreGraphics"
-      ]
-    },
-    "commands": {
-      "postlink": "node node_modules/react-native-qqsdk/scripts/postlink/postlink",
-      "postunlink": "node node_modules/react-native-qqsdk/scripts/postunlink/postunlink"
-    }
-  }
+  "files": [
+    "android",
+    "ios",
+    "lib",
+    "index.js",
+    "react-native-qqsdk.podspec"
+  ]
 }
