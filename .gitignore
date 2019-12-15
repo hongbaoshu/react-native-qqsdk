@@ -58,3 +58,4 @@ android/gradlew.bat
 .classpath
 .gradle
 .settings
+.vscode

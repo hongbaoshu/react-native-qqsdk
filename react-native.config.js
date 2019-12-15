@@ -16,10 +16,6 @@ module.exports = {
           },
         android: {}, // projects are grouped into "platforms"
       },
-      commands: {
-        "postlink": "node node_modules/react-native-qqsdk/scripts/postlink/postlink",
-        "postunlink": "node node_modules/react-native-qqsdk/scripts/postunlink/postunlink"
-      },
       // hooks are considered anti-pattern, please avoid them
       hooks: {
         "postlink": "node node_modules/react-native-qqsdk/scripts/postlink/postlink",

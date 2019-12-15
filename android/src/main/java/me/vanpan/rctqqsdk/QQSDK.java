@@ -87,6 +87,16 @@ public class QQSDK extends ReactContextBaseJavaModule {
                 if (requestCode == Constants.REQUEST_QQ_FAVORITES) {
                     Tencent.onActivityResultData(requestCode, resultCode, intent, addToQQFavoritesListener);
                 }
+            } else {
+                if (requestCode == Constants.REQUEST_LOGIN) {
+                    mPromise.reject("400", QQ_CANCEL_BY_USER);
+                }
+                if (requestCode == Constants.REQUEST_QQ_SHARE) {
+                    mPromise.reject("400", QQ_CANCEL_BY_USER);
+                }
+                if (requestCode == Constants.REQUEST_QQ_FAVORITES) {
+                    mPromise.reject("400", QQ_CANCEL_BY_USER);
+                }
             }
         }
     };
