@@ -686,7 +686,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
                 return;
             }
             JSONObject jsonResponse = (JSONObject) response;
-            if (null != jsonResponse && jsonResponse.length() == 0) {
+            if (jsonResponse.length() == 0) {
                 mPromise.reject("600", QQ_RESPONSE_ERROR);
                 return;
             }
