@@ -1,25 +1,31 @@
 buildscript {
-    //Buildscript is evaluated before everything else so we can't use getExtOrDefault
-    def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : project.properties['ReactNativeQQSDK_kotlinVersion']
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['ReactNativeQQSDK_' + name]
+  }
 
+  if (project == rootProject) {
     repositories {
-        google()
-        jcenter()
+    google()
+    jcenter()
+  }
+
+    dependencies {
+      classpath("com.android.tools.build:gradle:3.6.0")
+      classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}")
+    }
+  } else {
+    repositories {
+      jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
-        //noinspection DifferentKotlinGradleVersion
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+      classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}")
     }
-}
-
-def getExtOrDefault(name) {
-    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['ReactNativeQQSDK_' + name]
+  }
 }
 
 def getExtOrIntegerDefault(name) {
-    return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['ReactNativeQQSDK_' + name]).toInteger()
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['ReactNativeQQSDK_' + name]).toInteger()
 }
 
 apply plugin: 'com.android.library'
