@@ -6,15 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "https://github.com/iVanPan",
+  "author": "https://github.com/twksos",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/iVanPan/react-native-qqsdk/issues"
+    "url": "https://github.com/hongbaoshu/react-native-qqsdk/issues"
   },
-  "homepage": "https://github.com/iVanPan/react-native-qqsdk",
+  "homepage": "https://github.com/hongbaoshu/react-native-qqsdk",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iVanPan/react-native-qqsdk.git"
+    "url": "git+https://github.com/hongbaoshu/react-native-qqsdk.git"
   },
   "keywords": [
     "ecosystem:react-native",
