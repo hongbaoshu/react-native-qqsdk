@@ -1,6 +1,7 @@
 # react-native-qqsdk
-[![npm](https://img.shields.io/npm/v/react-native-qqsdk.svg)](https://www.npmjs.com/package/react-native-qqsdk)
-[![npm](https://img.shields.io/npm/dm/react-native-qqsdk.svg)](https://www.npmjs.com/package/react-native-qqsdk)
+
+[//]: # ([![npm]&#40;https://img.shields.io/npm/v/react-native-qqsdk.svg&#41;]&#40;https://www.npmjs.com/package/react-native-qqsdk&#41;)
+[//]: # ([![npm]&#40;https://img.shields.io/npm/dm/react-native-qqsdk.svg&#41;]&#40;https://www.npmjs.com/package/react-native-qqsdk&#41;)
 [![platform](https://img.shields.io/badge/platform-iOS%2FAndroid-lightgrey.svg?style=flat)](https://github.com/iVanPan/react-native-qqsdk)
 [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat)](https://github.com/iVanPan/react-native-qqsdk/blob/master/LICENSE)
 
@@ -46,11 +47,11 @@ A React Native wrapper around the Tencent QQ SDK for Android and iOS. Provides a
 
 ## Installation
 ```shell
-npm install --save react-native-qqsdk@latest
+npm install --save @hongbaoshu/react-native-qqsdk@latest
 ```
-### RNPM
+or
 ```
- react-native link react-native-qqsdk
+yarn add @hongbaoshu/react-native-qqsdk@latest
 ```
 ### CocoaPods
 1. Install package from npm
@@ -136,29 +137,7 @@ npm install --save react-native-qqsdk@latest
   "qq_app_id": "YOUR_QQ_APP_ID"
 }
 ```
-        
-4.Update the `MainApplication.java` file to use react-native-qqsdk via the following changes:
 
-```java
-...
-// 1. Import the plugin class.
-import me.vanpan.rctqqsdk.QQSDKPackage;
-
-public class MainApplication extends Application implements ReactApplication {
-
-    private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
-        ...
-
-        @Override
-        protected List<ReactPackage> getPackages() {
-            return Arrays.<ReactPackage>asList(
-                new MainReactPackage(),
-                new QQSDKPackage()
-            );
-        }
-    };
-}
-```
 ## Documentation
 
 ### Support API
@@ -170,9 +149,9 @@ public class MainApplication extends Application implements ReactApplication {
 |      Platform      |   iOS  |   iOS     |     iOS      | Android |  Android  |    Android   |
 |        :---:       | :---:  |   :---:   |    :---:     |   :---: |    :---:  |     :---:    |
 |      ShareScene    |   QQ   |   QQZone  |  QQ Favorite |    QQ   |   QQZone  |  QQ Favorite |
-|      Text        |    √   |     √     |      √       |    ✕    |     √     |      √       |
+|      Text          |    √   |     √     |      √       |    ✕    |     √     |      √       |
 |      Image         |    √   |     √     |      √       |    √    |     √     |      √       |
-|      News        |    √   |     √     |      √       |    √    |     √     |      √       |
+|      News          |    √   |     √     |      √       |    √    |     √     |      √       |
 |      Audio         |    √   |     √     |      √       |    √    |     √     |      √       |
 
 

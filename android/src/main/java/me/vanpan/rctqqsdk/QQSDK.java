@@ -98,15 +98,11 @@ public class QQSDK extends ReactContextBaseJavaModule {
         reactContext.addActivityEventListener(mActivityEventListener);
         appId = this.getAppID(reactContext);
         appName = this.getAppName(reactContext);
-        if (null == mTencent) {
-            mTencent = Tencent.createInstance(appId, reactContext);
-        }
     }
 
     @Override
     public void initialize() {
         super.initialize();
-        Tencent.setIsPermissionGranted(true);
     }
 
     @Override
@@ -118,7 +114,6 @@ public class QQSDK extends ReactContextBaseJavaModule {
     public void onCatalystInstanceDestroy() {
         super.onCatalystInstanceDestroy();
         if (mTencent != null) {
-            mTencent.releaseResource();
             mTencent = null;
         }
         appId = null;
@@ -128,12 +123,13 @@ public class QQSDK extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void checkClientInstalled(Promise promise) {
+        Tencent tencent = getTencent();
         Activity currentActivity = getCurrentActivity();
         if (null == currentActivity) {
             promise.reject("405", ACTIVITY_DOES_NOT_EXIST);
             return;
         }
-        Boolean installed = mTencent.isSupportSSOLogin(currentActivity);
+        Boolean installed = tencent.isSupportSSOLogin(currentActivity);
         if (installed) {
             promise.resolve(true);
         } else {
@@ -143,17 +139,19 @@ public class QQSDK extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void logout(Promise promise) {
+        Tencent tencent = getTencent();
         Activity currentActivity = getCurrentActivity();
         if (null == currentActivity) {
             promise.reject("405", ACTIVITY_DOES_NOT_EXIST);
             return;
         }
-        mTencent.logout(currentActivity);
+        tencent.logout(currentActivity);
         promise.resolve(true);
     }
 
     @ReactMethod
     public void ssoLogin(final Promise promise) {
+        Tencent tencent = getTencent();
         final Activity currentActivity = getCurrentActivity();
         if (null == currentActivity) {
             promise.reject("405", ACTIVITY_DOES_NOT_EXIST);
@@ -161,7 +159,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
         }
         Runnable runnable = () -> {
             mPromise = promise;
-            mTencent.login(currentActivity, "all", loginListener);
+            tencent.login(currentActivity, "all", loginListener);
         };
         UiThreadUtil.runOnUiThread(runnable);
     }
@@ -173,6 +171,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
             promise.reject("405", ACTIVITY_DOES_NOT_EXIST);
             return;
         }
+        Tencent tencent = getTencent();
         mPromise = promise;
         final Bundle params = new Bundle();
         switch (shareScene) {
@@ -183,10 +182,9 @@ public class QQSDK extends ReactContextBaseJavaModule {
                 params.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE, QzonePublish.PUBLISH_TO_QZONE_TYPE_PUBLISHMOOD);
                 params.putString(QzoneShare.SHARE_TO_QQ_TITLE, text);
                 Runnable zoneRunnable = new Runnable() {
-
                     @Override
                     public void run() {
-                        mTencent.publishToQzone(currentActivity, params, qZoneShareListener);
+                        tencent.publishToQzone(currentActivity, params, qZoneShareListener);
                     }
                 };
                 UiThreadUtil.runOnUiThread(zoneRunnable);
@@ -206,6 +204,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
             promise.reject("405", ACTIVITY_DOES_NOT_EXIST);
             return;
         }
+        Tencent tencent = getTencent();
         mPromise = promise;
         image = processImage(image);
         final Bundle params = new Bundle();
@@ -215,7 +214,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
                 params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, image);
                 params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
                 params.putString(QQShare.SHARE_TO_QQ_SUMMARY, description);
-                Runnable qqRunnable = () -> mTencent.shareToQQ(currentActivity, params, qqShareListener);
+                Runnable qqRunnable = () -> tencent.shareToQQ(currentActivity, params, qqShareListener);
                 UiThreadUtil.runOnUiThread(qqRunnable);
                 break;
             case ShareScene.QQZone:
@@ -228,7 +227,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
 
                     @Override
                     public void run() {
-                        mTencent.shareToQQ(currentActivity, params, qqShareListener);
+                        tencent.shareToQQ(currentActivity, params, qqShareListener);
                     }
                 };
                 UiThreadUtil.runOnUiThread(zoneRunnable);
@@ -246,6 +245,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
             promise.reject("405", ACTIVITY_DOES_NOT_EXIST);
             return;
         }
+        Tencent tencent = getTencent();
         mPromise = promise;
         final Bundle params = new Bundle();
         switch (shareScene) {
@@ -263,7 +263,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
 
                     @Override
                     public void run() {
-                        mTencent.shareToQQ(currentActivity, params, qqShareListener);
+                        tencent.shareToQQ(currentActivity, params, qqShareListener);
                     }
                 };
                 UiThreadUtil.runOnUiThread(qqRunnable);
@@ -281,7 +281,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
 
                     @Override
                     public void run() {
-                        mTencent.shareToQzone(currentActivity, params, qZoneShareListener);
+                        tencent.shareToQzone(currentActivity, params, qZoneShareListener);
                     }
                 };
                 UiThreadUtil.runOnUiThread(zoneRunnable);
@@ -300,6 +300,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
             promise.reject("405", ACTIVITY_DOES_NOT_EXIST);
             return;
         }
+        Tencent tencent = getTencent();
         mPromise = promise;
         final Bundle params = new Bundle();
         switch (shareScene) {
@@ -318,7 +319,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
 
                     @Override
                     public void run() {
-                        mTencent.shareToQQ(currentActivity, params, qqShareListener);
+                        tencent.shareToQQ(currentActivity, params, qqShareListener);
                     }
                 };
                 UiThreadUtil.runOnUiThread(qqRunnable);
@@ -337,7 +338,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
 
                     @Override
                     public void run() {
-                        mTencent.shareToQzone(currentActivity, params, qZoneShareListener);
+                        tencent.shareToQzone(currentActivity, params, qZoneShareListener);
                     }
                 };
                 UiThreadUtil.runOnUiThread(zoneRunnable);
@@ -355,6 +356,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
             promise.reject("405", ACTIVITY_DOES_NOT_EXIST);
             return;
         }
+        Tencent tencent = getTencent();
         mPromise = promise;
         final Bundle params = new Bundle();
         switch (shareScene) {
@@ -372,7 +374,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
 
                     @Override
                     public void run() {
-                        mTencent.shareToQzone(currentActivity, params, qZoneShareListener);
+                        tencent.shareToQzone(currentActivity, params, qZoneShareListener);
                     }
                 };
                 UiThreadUtil.runOnUiThread(zoneRunnable);
@@ -660,15 +662,16 @@ public class QQSDK extends ReactContextBaseJavaModule {
      *
      * @param jsonObject
      */
-    public static boolean initOpenidAndToken(JSONObject jsonObject) {
+    public boolean initOpenidAndToken(JSONObject jsonObject) {
         try {
             String token = jsonObject.getString(Constants.PARAM_ACCESS_TOKEN);
             String expires = jsonObject.getString(Constants.PARAM_EXPIRES_IN);
             String openId = jsonObject.getString(Constants.PARAM_OPEN_ID);
             if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(expires)
                     && !TextUtils.isEmpty(openId)) {
-                mTencent.setAccessToken(token, expires);
-                mTencent.setOpenId(openId);
+                Tencent tencent = getTencent();
+                tencent.setAccessToken(token, expires);
+                tencent.setOpenId(openId);
                 return true;
             }
         } catch (Exception e) {
@@ -692,13 +695,21 @@ public class QQSDK extends ReactContextBaseJavaModule {
                 return;
             }
             if (initOpenidAndToken(jsonResponse)) {
+                Tencent tencent = getTencent();
                 WritableMap map = Arguments.createMap();
-                map.putString("userid", mTencent.getOpenId());
-                map.putString("access_token", mTencent.getAccessToken());
-                map.putDouble("expires_time", mTencent.getExpiresIn());
+                map.putString("userid", tencent.getOpenId());
+                map.putString("access_token", tencent.getAccessToken());
+                map.putDouble("expires_time", tencent.getExpiresIn());
                 mPromise.resolve(map);
             } else {
                 mPromise.reject("600", QQ_RESPONSE_ERROR);
+            }
+        }
+
+        @Override
+        public void onWarning(int code) {
+            if (code == Constants.ERROR_NO_AUTHORITY) {
+                Log.d(TAG, "onWarning: 请授权手Q访问分享的文件的读取权限!");
             }
         }
 
@@ -723,6 +734,13 @@ public class QQSDK extends ReactContextBaseJavaModule {
         }
 
         @Override
+        public void onWarning(int code) {
+            if (code == Constants.ERROR_NO_AUTHORITY) {
+                Log.d(TAG, "onWarning: 请授权手Q访问分享的文件的读取权限!");
+            }
+        }
+
+        @Override
         public void onComplete(Object response) {
             mPromise.resolve(true);
         }
@@ -741,6 +759,13 @@ public class QQSDK extends ReactContextBaseJavaModule {
         @Override
         public void onCancel() {
             mPromise.reject("503", QZONE_SHARE_CANCEL);
+        }
+
+        @Override
+        public void onWarning(int code) {
+            if (code == Constants.ERROR_NO_AUTHORITY) {
+                Log.d(TAG, "onWarning: 请授权手Q访问分享的文件的读取权限!");
+            }
         }
 
         @Override
@@ -765,5 +790,13 @@ public class QQSDK extends ReactContextBaseJavaModule {
         byteArrayOutputStream.close();
         inputStream.close();
         return byteArrayOutputStream.toByteArray();
+    }
+
+    private Tencent getTencent() {
+        if (null == mTencent) {
+            Tencent.setIsPermissionGranted(true);
+            mTencent = Tencent.createInstance(appId, getReactApplicationContext());
+        }
+        return mTencent;
     }
 }

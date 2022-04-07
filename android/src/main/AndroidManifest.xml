@@ -26,5 +26,8 @@
             android:screenOrientation="behind" 
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
-
+    <queries>
+        <package android:name="com.tencent.mobileqq" />
+        <package android:name="com.tencent.tim" />
+    </queries>
 </manifest>
