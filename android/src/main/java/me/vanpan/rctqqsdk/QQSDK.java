@@ -106,6 +106,7 @@ public class QQSDK extends ReactContextBaseJavaModule {
     @Override
     public void initialize() {
         super.initialize();
+        Tencent.setIsPermissionGranted(true);
     }
 
     @Override
