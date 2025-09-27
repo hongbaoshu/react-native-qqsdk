@@ -83,6 +83,14 @@ npm install --save react-native-qqsdk@latest
 ```
 #### iOS Setup
 
+> 💡 推荐：可运行一键自动配置脚本，自动完成大部分 Info.plist、AppDelegate.m、framework search path 等配置：
+> 
+> ```sh
+> node node_modules/react-native-qqsdk/scripts/setup.js
+> ```
+> 
+> 如遇部分配置未自动完成，请继续参考下方手动步骤。
+
 1. Open your app's Xcode project
 
 2. Find the `RCTQQSDK.xcodeproj` file within the `node_modules/react-native-qqsdk/ios` directory  and drag it into the `Libraries` node in Xcode
